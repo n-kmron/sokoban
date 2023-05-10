@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script defer src="scripts/jquery.min.js"></script>
+    <meta charset="utf-8">
+    <title>Sokoban</title>
+    <link rel="icon" type="image/x-icon" href="img/box.png">
+    <link rel="stylesheet" href="styles/main.css">
+    <script defer src="scripts/game.js"></script>
+    <script defer src="scripts/levels.js"></script>
+    <script defer src="scripts/state.js"></script>
+</head>
+
+<body>
+    <header>
+        <h1>Sokoban</h1>
+        <p>Level 1</p>
+        <span>0</span>
+        <span id="backup">←</span><br><br><br>
+    </header>
+    <main>
+        <div id="modal">
+            <div class="modal_content">
+                <p>Cliquez sur la flèche correspondante pour pousser une boite</p>
+                <img src="img/help-push.png" alt="help push">
+                <p>Ceci est impossible</p>
+                <div>
+                    <img src="img/help-double.png" alt="help double">
+                    <img src="img/help-pull.png" alt="help pull">
+                </div>
+                <p>Poussez toutes boites sur leur cible pour terminer le niveau</p>
+                <div>
+                    <img src="img/help-level.png" alt="help level">
+                    <img src="img/help-win.png" alt="help win">
+                </div>
+                
+                
+                
+                
+                <!-- Crée une croix -->
+                <a href="#">&times;</a> 
+            </div>
+        </div>
+        <section>
+            <div id="world"></div>
+        </section><br>
+        <button>Restart level</button>
+        <button><a href="#modal">Help Dialog</a></button>
+        <h3></h3>
+    </main>
+    <footer>
+        <p>Cameron Noupoue</p>
+        <p>|</p>
+        <p>All rights reserved &copy;</p>
+        <p>|</p>
+        <p>image credit : Jeng-Long Jiang</p>
+    </footer>
+</body>
+
+</html>

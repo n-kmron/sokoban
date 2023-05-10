@@ -1,0 +1,212 @@
+body {
+  color: white;
+  text-align: center;
+  font-family: monospace;
+  font-size: large;
+  background-color: royalblue;
+  user-select: none;
+}
+
+main {
+  /*Permet de décaler le footer en bas*/
+  min-height: 65vh;
+}
+
+section {
+  display: flex;
+  justify-content: center;
+}
+
+#world {
+  border: 4px solid white;
+}
+
+#backup {
+  cursor: pointer;
+}
+
+footer {
+  display: flex;
+  justify-content: space-around;
+}
+
+p {
+  margin-bottom: 50px;
+}
+.square {
+  /*Une case*/
+  height: 30px;
+  width: 30px;
+}
+
+.target {
+  /*Une cible*/
+  background-color: yellow;
+  background-image: url(../img/target.png);
+}
+
+.ground {
+  /*Le sol*/
+  background-color: darkgreen;
+  background-image: url(../img/ground.png);
+}
+
+.wall {
+  /*Un mur*/
+  background-color: brown;
+  background-image: url(../img/wall.png);
+}
+
+.box {
+  /*Une boîte*/
+  background-color: red;
+  background-image: url(../img/box.png);
+}
+
+.box.target {
+  /*Une boîte sur une cible*/
+  background-color: cornsilk;
+  background-image: url(../img/box-on-target.png);
+}
+
+.player, .top, .bottom, .left, .right {
+  background-color: blue;
+}
+
+.player {
+  /*Un joueur*/
+  animation: front 0.75s infinite;
+}
+
+.top {
+  animation: up 0.75s infinite; 
+}
+
+.bottom {
+  animation: front 0.75s infinite;
+}
+
+.left {
+  animation: left 0.75s infinite;
+}
+
+.right {
+  animation: right 0.75s infinite;
+}
+
+.won {
+  background-image: url(../img/player-won.png);
+}
+
+.allOnTarget {
+  animation: allOnTarget 0.75s ease;
+}
+
+
+.flex {
+  display: flex;
+}
+
+span {
+  border: 2px solid white;
+  padding: 10px;
+}
+
+/* Les animations */
+@keyframes up {
+  from {
+    background-image: url(../img/player-up.png);
+  } to {
+    background-image: url(../img/player-up2.png);
+  }
+}
+
+@keyframes front {
+  from {
+    background-image: url(../img/player-front.png);
+  } to {
+    background-image: url(../img/player-front2.png);
+  }
+}
+
+@keyframes left {
+  from {
+    background-image: url(../img/player-left.png);
+  } to {
+    background-image: url(../img/player-left2.png);
+  }
+}
+
+@keyframes right {
+  from {
+    background-image: url(../img/player-right.png);
+  } to {
+    background-image: url(../img/player-right2.png);
+  }
+}
+
+@keyframes allOnTarget {
+  from {
+    background-image: url(../img/box.png);
+  } to {
+    background-image: url(../img/box-on-target.png);
+  }
+}
+
+
+/* Fenêtre modale */
+
+button:last-of-type a {
+  text-decoration: none;
+  color: black;
+}
+
+#modal {
+  visibility: hidden;
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  margin: auto auto;
+  background-color: rgba(52, 52, 56, 0.808);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: 0.3s;
+
+}
+
+#modal:target {
+  /* S'active quand la modal est ciblée */
+  visibility: visible;
+  opacity: 1;
+}
+/* modal:first-child */
+.modal_content {
+  background-color: white;
+  padding: 1.5em 2em;
+  width: 500px;
+  max-width: 90%;
+  border-radius: 4px;
+  position: relative;
+  color: black;
+}
+
+#modal a {
+  position: absolute;
+  right: 15px;
+  top: 15px;
+  text-decoration: none;
+  color: red;
+  font-size: larger;
+}
+
+#modal p {
+  margin-top: 50px;
+  font-size: smaller;
+  text-align: center;
+  margin: 30px auto;
+  width: 80%;
+}
