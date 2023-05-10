@@ -1,7 +1,7 @@
 "use strict";
 
 //Déclaration de variables
-let niveau = 0;
+let level = 0;
 let nbMoves = 0;
 let direction = "player";
 
@@ -142,14 +142,14 @@ function doTheMove(pos, destination) {
     getSquareAt(pos).addClass("ground");
     getSquareAt(destination).addClass("player");
     getSquareAt(destination).addClass(direction);
-    if (niveau === 6 && allOnTarget()) {
+    if (level === 6 && allOnTarget()) {
         getSquareAt(destination).removeClass("player");
         getSquareAt(destination).removeClass("bottom");
         getSquareAt(destination).removeClass("top");
         getSquareAt(destination).removeClass("left");
         getSquareAt(destination).removeClass("right");
         getSquareAt(destination).addClass("won");
-        $("h3").text("Féliciation, vous avez gagné !");
+        $("h3").text("Congratulation, you won !");
     }
 }
 /**
@@ -258,8 +258,8 @@ function allOnTarget() {
  * Prépare un nouveau niveau à être construit
  */
 function initLevel() {
-    niveau += 1;
-    buildLevel(niveau);
+    level += 1;
+    buildLevel(level);
     nbMoves = 0;
     $("span:first").text(nbMoves);
 }
@@ -269,23 +269,23 @@ function initLevel() {
  * @param {JQuery.KeyDownEvent} event
  */
 function finishLevel(event) {
-    if (event.key === " " && niveau < 6) {
+    if (event.key === " " && level < 6) {
         $("#world").children()
             .remove();
         initLevel();
-        $("p:first").text(`Niveau ${niveau + 1}`);
+        $("p:first").text(`Level ${level + 1}`);
     }
 }
 
 //Ready
 $(() => {
-    buildLevel(niveau);
+    buildLevel(level);
     //l'event keydown détecte quand un touche est enffoncée;
     $(document).on("keydown", finishLevel);
     $(document).on("keydown", move);
-    $("#level").text(`Niveau ${niveau + 1}`);
+    $("#level").text(`Level ${level + 1}`);
     $("button:first").on("click", function() {
-        niveau -= 1;
+        level -= 1;
         $("#world").children()
             .remove();
         initLevel();
