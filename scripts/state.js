@@ -3,7 +3,7 @@
 //Classes
 
 /**
- * Crée une sauvegarde de l'état du jeu avant un déplacement
+ * Creates a save game state before a move
  */
 class State {
     /**
@@ -20,7 +20,7 @@ class State {
 
     /** @returns {{x: number,y: number;}}  */
     get playerPosition() {
-        return {...this._playerPosition}; //Les '...' permettent de retourner une copie qui n'est donc pas modifiable
+        return {...this._playerPosition}; // The '...' return a copy which is therefore not modifiable
     }
 
     /** @returns {{x: number,y: number;} | undefined} */

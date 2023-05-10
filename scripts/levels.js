@@ -1,21 +1,21 @@
 "use strict";
 
 /**
- * @typedef {Object} Level Description d'un niveau de Sokoban.
- * @property {"easy" | "medium" | "difficult"} difficulty La dificultÃ© du jeu.
- * @property {number} [best] Le nombre minimal de mouvement pour gagner.
+ * @typedef {Object} Level Description of a Sokoban level.
+ * @property {"easy" | "medium" | "difficult"} difficulty The difficulty of the game.
+ * @property {number} [best] The minimum number of moves to win.
  * @property {string[]} map
- * La carte du niveau, ligne par ligne, avec la signification suivante pour chaque symbole :
- *   * `ðŸ§` â€“ le joueur,
- *   * `x` â€“ une cible,
- *   * `#` â€“ une boite,
- *   * `@` â€“ une boite sur une cible,
- *   * ` ` â€“ (espace) le sol,
- *   * *autre* â€“ un mur.
+ * The level map, line by line, with the following meaning for each symbol:
+ *   * `ðŸ§` â€“ the player,
+ *   * `x` â€“ a target,
+ *   * `#` â€“ a box,
+ *   * `@` â€“ a box on a target,
+ *   * ` ` â€“ (space) the ground,
+ *   * *autre* â€“ a wall.
  */
 
 /**
- * Structure de donnÃ©es *globale* pour les donnÃ©es concernant les diffÃ©rents niveaux du jeu.
+ * *global* data structure for data concerning the different levels of the game.
  * @type {Level[]}
  */
 const levels = [

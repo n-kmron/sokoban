@@ -1,6 +1,6 @@
 "use strict";
 
-//Déclaration de variables
+//Declaration of variables
 let level = 0;
 let nbMoves = 0;
 let direction = "player";
@@ -8,11 +8,11 @@ let direction = "player";
 /**@type Array<State>*/
 const states = [];
 
-//Fonctions
+//Functions
 
 /**
- * Affiche la map d'un niveau et défini la classe de chaque élément
- * @param {Number} level, l'indice du tableau levels correspondant au n° du niveau
+ * Displays the map of a level and defines the class of each element
+ * @param {Number} level, the index of the levels array corresponding to the level number
  */
 function buildLevel(level) {
     for (let i = 0; i < levels[level].map.length; i++) {
@@ -32,25 +32,25 @@ function buildLevel(level) {
             } else if (element === "🧍".charAt(0) || element === "🧍".charAt(1)) {
                 $(`.line${i}`).append("<div class=\"square player\"></div>");
             } else {
-                //si ce n'est pas les autres, alors c'est un mur
+                //if it's not the others, then it's a wall
                 $(`.line${i}`).append("<div class=\"square wall\"></div>");
             }
 
-            //le codage du joueur dépasse le nombre de bits autorisé donc est codé sur 2 caractères : le char at permet d'afficher que le caractère ou le joueur est présent et pas l'autre
+            //the coding of the player exceeds the authorized number of bits therefore is coded on 2 characters: the char at makes it possible to display that the character or the player is present and not the other
         }
     }
 
-    //permet de créer une liste avec tous les joueurs donc 2 car codé sur 2 caractères et en enlève 1 pour qu'il puisse enlever celui en trop
+    //allows to create a list with all the players therefore 2 because coded on 2 characters and removes 1 so that he can remove the extra one
     const list = $(".player");
     list[1].remove();
 }
 
 /**
  *
- * @returns la position du joueur sur la carte
+ * @returns the position of the player on the map
  */
 function getPlayerPosition() {
-    const x = $(".player").index(); //Permet d'aller chercher la ligne
+    const x = $(".player").index(); //Lets fetch the line
     const y = $(".player").parent()
         .index();
 
@@ -60,7 +60,7 @@ function getPlayerPosition() {
 /**
  *
  * @param {{x: number, y: number}} position
- * @returns la case à la position donnée
+ * @returns the box at the given position
  */
 function getSquareAt(position) {
     return $("#world").children()
@@ -70,14 +70,14 @@ function getSquareAt(position) {
 }
 
 /**
- * Déplace le joueur d'une case en fonction de la flèche directionnelle
+ * Moves the player one space according to the directional arrow
  * @param {JQuery.KeyDownEvent} event
  */
 function move(event) {
-    let addX = 0; //variation sur l'axe des X pour la destination du joueur
-    let addY = 0; //variation sur l'axe des Y pour la destination du joueur
-    let addX2 = 0; //variation sur l'axe des X pour la destination de la boite
-    let addY2 = 0; //variation sur l'axe des Y pour la destination de la boite
+    let addX = 0; //x-axis variation for player destination
+    let addY = 0; //Y-axis variation for player destination
+    let addX2 = 0; //variation on the X axis for the destination of the box
+    let addY2 = 0; //variation on the Y axis for the destination of the box
 
     const pos = getPlayerPosition();
 
@@ -104,11 +104,11 @@ function move(event) {
         break;
     }
 
-    const destination = {x: pos.x + addX, y: pos.y + addY}; //nouvelle position du joueur
-    const destination2 = {x: pos.x + addX2, y: pos.y + addY2}; //nouvelle position de la boite
+    const destination = {x: pos.x + addX, y: pos.y + addY}; //new player position
+    const destination2 = {x: pos.x + addX2, y: pos.y + addY2}; //new box position
 
     if (!allOnTarget()) {
-        //Enregistrement de l'état
+        //State recording
         let state = undefined;
         if (getSquareAt(destination).hasClass("box")) {
             state = new State(pos, destination);
@@ -129,9 +129,9 @@ function move(event) {
 }
 
 /**
- * Exécute le déplacement
- * @param {{x: number;y: number;}} pos la position de départ
- * @param {{x: number;y: number;}} destination la nouvelle position
+ * Execute the move
+ * @param {{x: number;y: number;}} pos starting position
+ * @param {{x: number;y: number;}} destination new position
  */
 function doTheMove(pos, destination) {
     getSquareAt(pos).removeClass("player");
@@ -153,13 +153,13 @@ function doTheMove(pos, destination) {
     }
 }
 /**
- * Déplace le joueur
- * @param {{x: number;y: number;}} pos la position de départ
- * @param {{x: number;y: number;}} destination la nouvelle position
- * @param {{x: number;y: number;}} destination2 l'élément suivant la position
+ * Moves the player
+ * @param {{x: number;y: number;}} pos starting position
+ * @param {{x: number;y: number;}} destination new position
+ * @param {{x: number;y: number;}} destination2 the element following the position
  */
 function advance(pos, destination, destination2) {
-    //ce if gère les cibles (pour qu'elles ne disparaissent pas)
+    //this if handles targets (so they don't disappear)
     if (
         getSquareAt(pos).hasClass("target") &&
       !getSquareAt(destination).hasClass("wall") &&
@@ -168,7 +168,7 @@ function advance(pos, destination, destination2) {
         doTheMove(pos, destination);
         getSquareAt(pos).removeClass("ground");
         getSquareAt(pos).addClass("target");
-        //ce else gère le reste des cas
+        //this else handles the rest of the cases
     } else if (
         !getSquareAt(destination).hasClass("wall") &&
       !boxAndWall(destination, destination2)
@@ -178,9 +178,9 @@ function advance(pos, destination, destination2) {
 }
 
 /**
- * @param {{x: number;y: number;}} destination le prochain obstacle
- * @param {{x: number;y: number;}} destination2 le second prochain obstacle
- * @returns si le prochain obstacle est une boite suivie d'un mur ou une boite suivie d'une boite ou une boite sur cible suivie d'une boite sur cible
+ * @param {{x: number;y: number;}} destination the next hurdle
+ * @param {{x: number;y: number;}} destination2 the second next hurdle
+ * @returns if the next obstacle is a box followed by a wall or a box followed by a box or a box on target followed by a box on target
  */
 function boxAndWall(destination, destination2) {
     if (
@@ -194,21 +194,21 @@ function boxAndWall(destination, destination2) {
     return false;
 }
 /**
- * Pousse une boite
- * @param {{x: number, y: number}} pos la position de départ
- * @param {{x: number, y: number}} destination la nouvelle position
- * @param {{x: number, y: number}} destination2 la nouvelle position de la boite (si il y en a une)
+ * Push a box
+ * @param {{x: number, y: number}} pos starting position
+ * @param {{x: number, y: number}} destination new position
+ * @param {{x: number, y: number}} destination2 the new position of the box (if there is one)
  */
 function pushBox(pos, destination, destination2) {
     if (
         getSquareAt(destination).hasClass("box")
     ) {
-        //si c'est une boite
+        //if it's a box
         if (
             !getSquareAt(destination2).hasClass("wall") &&
         !getSquareAt(destination2).hasClass("box")
         ) {
-        //et que sa nouvelle destination n'est ni une boite, ni un mur
+        //and that its new destination is neither a box nor a wall
             doTheMove(pos, destination);
             getSquareAt(destination).removeClass("box");
             getSquareAt(destination2).addClass("box");
@@ -217,16 +217,16 @@ function pushBox(pos, destination, destination2) {
     if (allOnTarget()) {
         const targets = document.getElementsByClassName("target");
 
-        //pour chaque élément des cibles
+        //for each element of the targets
         for (const element of targets) {
-        //si l'élément n'est pas une boîte (ce n'est donc pas une boîte sur une cible)
+        //if the element is not a box (so it is not a box on a target)
             element.classList.add("allOnTarget");
         }
     }
 }
 
 /**
- * Incrémente le compteur de mouvement
+ * Increments movement counter
  * @param {JQuery.KeyDownEvent} event
  */
 function incrMoves(event) {
@@ -237,16 +237,16 @@ function incrMoves(event) {
 }
 
 /**
- * Vérifie si toutes les boites sont sur leur cible
- * @returns un boolean de la condition ci-dessus
+ * Check if all the boxes are on their target
+ * @returns a boolean of the above condition
  */
 function allOnTarget() {
-    //tous les éléments qui ont la classe 'target'
+    //all elements that have class 'target'
     const targets = document.getElementsByClassName("target");
 
-    //pour chaque élément des cibles
+    //for each element of the targets
     for (const element of targets) {
-        //si l'élément n'est pas une boîte (ce n'est donc pas une boîte sur une cible)
+        //if the element is not a box (so it is not a box on a target)
         if (!element.classList.contains("box")) {
             return false;
         }
@@ -255,7 +255,7 @@ function allOnTarget() {
 }
 
 /**
- * Prépare un nouveau niveau à être construit
+ * Prepares a new level to be built
  */
 function initLevel() {
     level += 1;
@@ -265,7 +265,7 @@ function initLevel() {
 }
 
 /**
- * Termine le niveau en appuyant sur la barre espace
+ * Complete the level by pressing the spacebar
  * @param {JQuery.KeyDownEvent} event
  */
 function finishLevel(event) {
@@ -280,7 +280,7 @@ function finishLevel(event) {
 //Ready
 $(() => {
     buildLevel(level);
-    //l'event keydown détecte quand un touche est enffoncée;
+    //the keydown event detects when a key is pressed;
     $(document).on("keydown", finishLevel);
     $(document).on("keydown", move);
     $("#level").text(`Level ${level + 1}`);
@@ -291,7 +291,7 @@ $(() => {
         initLevel();
     });
 
-    //La backup (annuler les mouvements)
+    //The backup (cancel the movements)
     $("#backup").on("click", function() {
         const compteur = states.length - 1;
         if (nbMoves > 0 && !allOnTarget()) {
